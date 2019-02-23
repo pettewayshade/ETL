@@ -1,27 +1,43 @@
 from flask import Flask, request, render_template
 import pymysql
-
-db = pymysql.connect("localhost", "username", "password", "database")
-
-app = Flask(__name__)
-def TablePull(pull):
-	cursor = db.cursor()
+from sqlalchemy import create_engine
+import pandas as pd
     
-	cursor.execute(pull)
-    results = cursor.fetchall()
-	return results
+app = Flask(__name__)
 
 
-@app.route('/')
-def PullDatabase():
-	
-    jobsTable=TablePull("SELECT * from ETLProject.jobs LIMIT 5")
-	unemploymentTable=TablePull("SELECT * from ETLProject.unemployment LIMIT 5")
-	popTable = TablePull("SELECT * from ETLProject.population  LIMIT 5")
-	statesTable=TablePull("SELECT * from ETLProject.states LIMIT 5")
-	FinalTable =TablePull("SELECT * from ETLProject.Final")
-	
-	return render_template('index.html', jobs=jobsTable,unemployment=unemploymentTable,pop=popTable,states=statesTable,final=FinalTable)
+@app.route("/")
+def home():
+    return render_template("index.html", data='')
 
+@app.route('/data')
+def getdata():
+    try:
+        from config import username, password, database
+        rds_connection_string = ("root:"+password+"@127.0.0.1:3306/etlproject")
+        engine = create_engine(f'mysql://{rds_connection_string}')
+        f = 'yes'
+        print(f)
+    except ModuleNotFoundError:
+        f = 'no'                                                                
+        
+    if f == 'yes':
+        final = pd.read_sql_query('select * from final', con=engine).head(50)
+        final = final.to_html()
+        finaldict = {
+                "final": final
+                }             
+        return render_template("index.html", data=finaldict)
+    
+    if f =='no':
+        with open('finalcsvtohtml', 'r') as myfile:
+                final = myfile.read()
+        finaldict = {
+                "final":final
+                }
+        return render_template("index.html", data=finaldict)
+                                                                                                                                            
+                                                                                                                                            
+                                                                                                                                            
 if __name__ == '__main__':
 	app.run(debug=True)
