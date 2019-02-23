@@ -40,15 +40,13 @@
      </div>
      <header>
       <h1 style="text-align: center">Summary</h1>
-      <p>We used a Monster.com Job Posting csv from Kaggle and pulled Unemployment and Population data via the Census API. This data was cleaned using Python, then imported into a MySQL database. We aggregated the Job data by State count, then compared to State wide unemployment data by merging the tables.</p>
+      <p>We used a Monster.com Job Posting csv from Kaggle and pulled Unemployment and Population data via the Census API. This data was cleaned using Python, then imported into a MySQL database. We aggregated the Job data by State count, then compared to State wide unemployment data by merging the tables. We used MySQL because it is a relational database, and we were using States as a key to join the tables.</p>
      </header> 
     </div>
     <div class="row">
       <div class="col-md-12" style="text-align: center">
         <h3>Final Table</h3>
-	<a class="btn btn-primary btn-lg" href="/data" role="button">Pull Table Data</a>
         <p>This table compares the number of Jobs Listings per state to State Unemployment data.</p>
-	<center><p>{{data.final|safe}}</p></center>
       </div>
     </div>
     <div class="row" style="text-align: center">
