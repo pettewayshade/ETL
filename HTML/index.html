@@ -2,8 +2,14 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
+    <style>.card {
+        margin: 0 auto; /* Added */
+        float: none; /* Added */
+        margin-bottom: 10px; /* Added */
+        .
+    }</style>
     <meta charset="utf-8">
-    <title>Bootswatch: Lux</title>
+    <title>ETL Project</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <link rel="stylesheet" href="https://bootswatch.com/4/lux/bootstrap.css" media="screen">
@@ -30,26 +36,50 @@
         <h1>ETL Project</h1>
         <h2>Team 5</h2>
         <h3>Jobs Versus Unemployment</h3>
-     
-    
-      
-      </div>
-      
-
-
-
-
-
-
-
-
-
+        <h5>Austin Edrington, Shade Petteway, Thihn Nguyen</h5>
+     </div>
+     <header>
+      <h1 style="text-align: center">Summary</h1>
+      <p>We used a Monster.com Job Posting csv from Kaggle and pulled Unemployment and Population data via the Census API. This data was cleaned using Python, then imported into a MySQL database. We aggregated the Job data by State count, then compared to State wide unemployment data by merging the tables.</p>
+     </header> 
     </div>
-
-
-
+    <div class="row">
+      <div class="col-md-12" style="text-align: center">
+        <h3>Final Table</h3>
+        <p>This table compares the number of Jobs Listings per state to State Unemployment data.</p>
+      </div>
+    </div>
+    <div class="row" style="text-align: center">
+        <div class="col-md-6">
+        <h3>Job Postings</h3>
+        <p>We found the CSV on Kaggle, imported it into a Dataframe, and cleaned it by dropping unnecessary columns. Since we are only interested in State data, we dropped rows with NaN as State.</p>
+        </div>
+        <div class="col-md-6">
+        <h3>Unemployment Data</h3>
+        <p>We scrapped this data from the Bureau of Labor Statistics using the Panda function .read_html</p>
+        </div>
+      </div>
+      <div class="row" style="text-align: center">
+          <div class="col-md-6">
+          <h3>State Population</h3>
+          <p>We pulled this information from the Census API.</p>
+          </div>
+          <div class="col-md-6">
+            <h3>State Abreviation Key Table</h3>
+            <p>We found this key online to help tie state names to state abrevations.</p>
+          </div>
+        </div>
     
-
+    <div class="card" style="width: 18rem; text-align: center">
+      <div class="card-body">
+        <h5 class="card-title">Sources</h5>
+        <p class="card-text">These are the main two links we used for our data.</p>
+        <ul>
+        <li><a href="https://www.kaggle.com/PromptCloudHQ/us-jobs-on-monstercom" class="card-link">Kaggle</a></li>
+        <li><a style="text-align: center" href="https://www.bls.gov/lau/lastrk17.htm" class="card-link">Bureau of Labor Statistics</a></li>
+        </ul>
+      </div>
+    </div>
 
     <script src="../_vendor/jquery/dist/jquery.min.js"></script>
     <script src="../_vendor/popper.js/dist/umd/popper.min.js"></script>
