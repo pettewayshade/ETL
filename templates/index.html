@@ -1,0 +1,265 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <style>.card {
+        margin: 0 auto;
+        float: none; 
+        margin-bottom: 10px;
+    }
+    .table-light {
+    border-radius: 5px;
+    width: 50%;
+    margin-left:auto;
+    margin-right:auto;
+    float: none;
+    border: solid 1px black;
+    }
+    </style>
+    <meta charset="utf-8">
+    <title>ETL Project</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <link rel="stylesheet" href="https://bootswatch.com/4/lux/bootstrap.css" media="screen">
+    <link rel="stylesheet" href="https://bootswatch.com/_assets/css/custom.min.css">
+    <script>
+
+     var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-23019901-1']);
+      _gaq.push(['_setDomainName', "bootswatch.com"]);
+        _gaq.push(['_setAllowLinker', true]);
+      _gaq.push(['_trackPageview']);
+
+     (function() {
+       var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+       ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+       var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+     })();
+
+    </script>
+  </head>
+  <body>
+    <div class="container-fluid">
+      <div class="jumbotron text-center">
+        <h1>ETL Project</h1>
+        <h2>Team 5</h2>
+        <h3>Jobs Versus Unemployment</h3>
+        <h5>Austin Edrington, Shade Petteway, Thihn Nguyen</h5>
+     </div>
+     <header>
+      <h1 style="text-align: center">Summary</h1>
+      <p>We used a Monster.com Job Posting csv from Kaggle and pulled Unemployment and Population data via the Census API. This data was cleaned using Python, then imported into a MySQL database. We aggregated the Job data by State count, then compared to State wide unemployment data by merging the tables. We used MySQL because it is a relational database, and we were using States as a key to join the tables.</p>
+     </header> 
+    </div>
+    <br>
+    <div class="row">
+      <div class="col-md-12" style="text-align: center">
+
+        <h3>Final Table</h3>
+        <p>This table compares the number of Jobs Listings per state to State Unemployment data.</p>
+      </div>
+      <a class="btn btn-primary btn-lg" href="/data" role="button">Pull Table Data</a>
+    <center><p>{{data.final|safe}}</p></center>
+    </div>
+    <br>
+    <div class="row" style="text-align: center">
+        <div class="col-md-6">
+        <h3>Job Postings</h3>
+        <p>We found the CSV on Kaggle, imported it into a Dataframe, and cleaned it by dropping unnecessary columns. Since we are only interested in State data, we dropped rows with NaN as State.</p>
+        <table border="1" class="table-light">
+          <thead>
+            <tr style="text-align: center;">
+              <th></th>
+              <th>job_title</th>
+              <th>job_type</th>
+              <th>sector</th>
+              <th>City</th>
+              <th>State</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th>0</th>
+              <td>IT Support Technician Job in Madison</td>
+              <td>Full Time</td>
+              <td>IT/Software Development</td>
+              <td>Madison</td>
+              <td>WI</td>
+            </tr>
+            <tr>
+              <th>1</th>
+              <td>Business Reporter/Editor Job in Madison</td>
+              <td>Full Time</td>
+              <td>Other</td>
+              <td>Madison</td>
+              <td>WI</td>
+            </tr>
+            <tr>
+              <th>2</th>
+              <td>Support Agent - GPS Systems Job in Racine</td>
+              <td>Full Time</td>
+              <td>Engineering</td>
+              <td>Racine</td>
+              <td>WI</td>
+            </tr>
+            <tr>
+              <th>3</th>
+              <td>Machine Operator Job in Portage</td>
+              <td>Full Time</td>
+              <td>Engineering</td>
+              <td>Portage</td>
+              <td>WI</td>
+            </tr>
+            <tr>
+              <th>4</th>
+              <td>C Indirect Fire Infantryman Job in Madison</td>
+              <td>Full Time</td>
+              <td>Entry Level</td>
+              <td>Madison</td>
+              <td>WI</td>
+            </tr>
+          </tbody>
+         </table>
+      </div>
+        <div class="col-md-6">
+        <h3>Unemployment Data</h3>
+        <p>We scrapped this data from the Bureau of Labor Statistics using the Panda function .read_html</p>
+        <table border="1" class="table-light">
+          <thead>
+            <tr style="text-align: center;">
+              <th></th>
+              <th>state</th>
+              <th>2017 rate</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th>0</th>
+              <td>Hawaii</td>
+              <td>2.4</td>
+            </tr>
+            <tr>
+              <th>1</th>
+              <td>North Dakota</td>
+              <td>2.6</td>
+            </tr>
+            <tr>
+              <th>2</th>
+              <td>New Hampshire</td>
+              <td>2.7</td>
+            </tr>
+            <tr>
+              <th>3</th>
+              <td>Colorado</td>
+              <td>2.8</td>
+            </tr>
+            <tr>
+              <th>4</th>
+              <td>Nebraska</td>
+              <td>2.9</td>
+            </tr>
+          </tbody>
+         </table>  
+      </div>
+      </div>
+      <br>
+      <div class="row" style="text-align: center">
+          <div class="col-md-6">
+          <h3>State Population</h3>
+          <p>We pulled this information from the Census API.</p>
+          <table border="1" class="table-light">
+            <thead>
+              <tr style="text-align: center;">
+                <th></th>
+                <th>population</th>
+                <th>state</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th>0</th>
+                <td>4874747</td>
+                <td>Alabama</td>
+              </tr>
+              <tr>
+                <th>1</th>
+                <td>739795</td>
+                <td>Alaska</td>
+              </tr>
+              <tr>
+                <th>2</th>
+                <td>7016270</td>
+                <td>Arizona</td>
+              </tr>
+              <tr>
+                <th>3</th>
+                <td>3004279</td>
+                <td>Arkansas</td>
+              </tr>
+              <tr>
+                <th>4</th>
+                <td>39536653</td>
+                <td>California</td>
+              </tr>
+            </tbody>
+           </table>
+          </div>
+          <div class="col-md-6">
+            <h3>State Abbreviation Key Table</h3>
+            <p>We found this key online to help tie state names to state abbrevations.</p>
+            <table border="1" class="table-light">
+              <thead>
+                <tr style="text-align: center;">
+                  <th></th>
+                  <th>State</th>
+                  <th>Abbreviation</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <th>0</th>
+                  <td>Alabama</td>
+                  <td>AL</td>
+                </tr>
+                <tr>
+                  <th>1</th>
+                  <td>Alaska</td>
+                  <td>AK</td>
+                </tr>
+                <tr>
+                  <th>2</th>
+                  <td>Arizona</td>
+                  <td>AZ</td>
+                </tr>
+                <tr>
+                  <th>3</th>
+                  <td>Arkansas</td>
+                  <td>AR</td>
+                </tr>
+                <tr>
+                  <th>4</th>
+                  <td>California</td>
+                  <td>CA</td>
+                </tr>
+              </tbody>
+             </table>
+          </div>
+        </div>
+    <br>
+    <div class="card" style="width: 18rem; text-align: center">
+      <div class="card-body">
+        <h5 class="card-title">Sources</h5>
+        <p class="card-text">These are the main two links we used for our data.</p>
+        <ul>
+        <li><a href="https://www.kaggle.com/PromptCloudHQ/us-jobs-on-monstercom" class="card-link">Kaggle</a></li>
+        <li><a style="text-align: center" href="https://www.bls.gov/lau/lastrk17.htm" class="card-link">Bureau of Labor Statistics</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <script src="../_vendor/jquery/dist/jquery.min.js"></script>
+    <script src="../_vendor/popper.js/dist/umd/popper.min.js"></script>
+    <script src="../_vendor/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="../_assets/js/custom.js"></script>
+  </body>
+</html>
